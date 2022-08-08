@@ -3,7 +3,7 @@
 //This is where I will declare my schema
 //We are declaring what the data should look like
 //Same as a header in an excel file.
-//1.Bring in moongoose
+//1. Bring in moongoose
 //2. Create the schema to conform the data its our Data Bouncers
 //3. Define the Modal so that we can write code to the mongoose and 'use' the schema.
 
