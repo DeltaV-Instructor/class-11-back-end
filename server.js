@@ -9,8 +9,17 @@ const cors = require('cors');
 // implement express
 const app = express();
 
-// middleware
+// middleware its like our bouncer....
 app.use(cors());
+
+//npm install mongoose this will bring in mongoose.
+const mongoose = require('mongoose');
+
+
+//we shoulds create models folder and a file for our model and schema for cats
+
+
+
 
 // define PORT validate env is working
 const PORT = process.env.PORT || 3002;
@@ -20,9 +29,9 @@ app.get('/', (request, response) => {
   response.status(200).send('Welcome!');
 });
 
-
+//star do?
 app.get('*', (request, response) => {
-  response.status(404).send('Not availabe');
+  response.status(404).send('Not available');
 });
 
 // ERROR
