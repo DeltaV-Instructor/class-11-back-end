@@ -11,6 +11,11 @@ const app = express();
 
 // middleware its like our bouncer....
 app.use(cors());
+app.use(express.json());
+
+
+
+
 
 //npm install mongoose this will bring in mongoose.
 const mongoose = require('mongoose');
@@ -34,11 +39,11 @@ db.once('open', function () {
 });
 
 
-
-
-
 // define PORT validate env is working
 const PORT = process.env.PORT || 3002;
+
+
+
 
 // ROUTES
 app.get('/', (request, response) => {
@@ -47,6 +52,32 @@ app.get('/', (request, response) => {
 
 
 app.get('/cats', getCats);
+//how to handle new cats from the front end: POST them to dB
+app.post('/cats', postCats);
+
+
+
+
+
+//Similar to our let search = req.query.search, now we are going to use the .body
+//data from front end can be complicated so we send it on the body of the request object.
+//POST http://localhost:3001/cats       grab cat object . 
+
+async function postCats(req, res, next){
+  console.log('!! req.body', req.body);
+  
+  try {
+    //so just like the seed data lets use the .create() again...
+                    //returns cat created after entering into our db
+  //pass to frontend                
+  let createdCat =  await Cat.create(req.body);
+                  res.status(200).send(createdCat);
+  } catch (error) {
+    next(error);
+  }
+}
+
+
 
 
 async function getCats(request, response, next){
@@ -62,16 +93,18 @@ async function getCats(request, response, next){
 
 
 
+
+
+
+
+
+
+
+
 //star do?
 app.get('*', (request, response) => {
   response.status(404).send('Not available');
 });
-
-
-
-
-
-
 
 
 // ERROR
