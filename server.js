@@ -55,6 +55,11 @@ app.get('/cats', getCats);
 //how to handle new cats from the front end: POST them to dB
 app.post('/cats', postCats);
 
+//we must have path parameter. It will be the unknown id
+//we will use a variable to capture that id like saying let id = id
+//to create that  variable we add ':<variable-name> in place of the path parameter
+app.delete('/cats/:id', deleteCats);
+
 
 
 
@@ -76,6 +81,31 @@ async function postCats(req, res, next){
     next(error);
   }
 }
+
+
+//8. so far we have used the path parameters from the request object
+/** 
+    req.query
+    req.body
+    req.params
+    have to get the right one in the right place.
+*/
+async function deleteCats(req, res, next){
+  let id = req.params.id
+  try {
+    //let us delete the cats from the database
+    await Cat.findByIdAndDelete(id);
+    //lets respond with a 200 cat delete
+    res.status(200).send('Cat was Deleted');
+  } catch (error) {
+    next(error);
+  }
+}
+
+
+
+
+
 
 
 
