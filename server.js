@@ -60,7 +60,7 @@ app.post('/cats', postCats);
 //to create that  variable we add ':<variable-name> in place of the path parameter
 app.delete('/cats/:id', deleteCats);
 
-
+app.put('/cats/:id', putCats);
 
 
 
@@ -103,7 +103,23 @@ async function deleteCats(req, res, next){
 }
 
 
-
+async function putCats(request, response, next){
+  try {
+     let id = request.params.id;
+      //data lives in the req object in the 'body'
+     let data = request.body;
+     //take 3 arguments
+     //1. is the ID
+     //2. is updated data object
+     //3. is wher we give it an options object
+     //This is a put() which says replace my entire object in the db with my new one.
+     //patch we would replace an item or entry not the entire record. 
+     let updatedCat = await Cat.findByIdAndUpdate(id,data,{new: true, overwrite: true});
+    response.status(200).send(updatedCat);
+  } catch (error) {
+    next(error);
+  }
+}
 
 
 
